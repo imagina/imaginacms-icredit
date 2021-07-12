@@ -19,7 +19,7 @@
             "Modules\\": "Modules/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "authors": [
         {
@@ -33,7 +33,10 @@
             "aliases": {
 
             }
-        }
+        },
+        "branch-alias": {
+            "dev-v8.x": "8.0.x-dev"
+        },
     },
     "autoload": {
         "psr-4": {
