@@ -7,4 +7,9 @@ $router->group(['prefix' => '/icredit/v1'/*,'middleware' => ['auth:api']*/], fun
 
     //======  AMOUNTS
     require('ApiRoutes/amountRoutes.php');
+
+    //======  PaymentMethod
+    require('ApiRoutes/paymentRoutes.php');
+
+
 });

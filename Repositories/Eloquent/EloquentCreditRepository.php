@@ -13,7 +13,7 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
         $query = $this->model->query();
 
         /*== RELATIONSHIPS ==*/
-        if (in_array('*', $params->include)) {//If Request all relationships
+        if (in_array('*', $params->include ?? [])) {//If Request all relationships
             $query->with([]);
         } else {//Especific relationships
             $includeDefault = ['translations'];//Default relationships
@@ -107,18 +107,17 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
         if (isset($params->fields) && is_array($params->fields) && count($params->fields) && $params->fields)
             $query->select($params->fields);
 
-
-        /*== REQUEST ==*/
-        //dd($query->toSql());
+            /*== REQUEST ==*/
         if (isset($params->onlyQuery) && $params->onlyQuery) {
-            return $query;
+          return $query;
         } else
-            if (isset($params->page) && $params->page) {
-                return $query->paginate($params->take);
-            } else {
-                $params->take ? $query->take($params->take) : false;//Take
-                return $query->get();
-            }
+          if (isset($params->page) && $params->page) {
+            return $query->paginate($params->take);
+          } else {
+            isset($params->take) && $params->take ? $query->take($params->take) : false;//Take
+            return $query->get();
+          }
+
     }
 
     public function getItem($criteria, $params = false)
