@@ -12,6 +12,8 @@
         "Modules\\Icredit\\Providers\\RouteServiceProvider"
     ],
     "aliases": {},
-    "files": [],
+    "files": [
+        "helpers.php"
+    ],
     "requires": []
 }

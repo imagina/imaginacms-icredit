@@ -13,7 +13,7 @@ return [
         "WithdrawalFundsRequestWasAcepted" => "Su solicitud para retirar fondos ha sido aprobada",
         "WithdrawalFundsRequestWasRejacted" => "Su solicitud para retirar fondos ha sido rechazada",
     ],
-    'description' => "",
+    'description' => "La descripcion del Modulo",
     'button' => [
         'create credit' => 'Crear un credito',
     ],

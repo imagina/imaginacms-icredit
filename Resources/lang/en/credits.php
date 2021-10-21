@@ -13,6 +13,7 @@ return [
         "WithdrawalFundsRequestWasAcepted" => "Your request to withdraw funds has been approved",
         "WithdrawalFundsRequestWasRejacted" => "Your request to withdraw funds has been rejected"
     ],
+    'description' => "The description Module",
     'button' => [
         'create credit' => 'Create a credit',
     ],
