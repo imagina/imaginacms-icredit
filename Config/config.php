@@ -64,7 +64,7 @@ return [
         ]
       ],
       "requestableType" => "Modules\\Icredit\\Entities\\Credit",
-      "formId" => "icredit::icreditFormicreditWithdrawalFundsForm",
+      "formId" => "icredit::icreditWithdrawalFundsForm",
       
       
       "forms" => [

@@ -40,10 +40,13 @@ class IcreditServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->publishConfig('icredit', 'permissions');
         $this->publishConfig('icredit', 'config');
         $this->publishConfig('icredit', 'crud-fields');
-
+  
+      $this->mergeConfigFrom($this->getModuleConfigFilePath('icredit', 'settings'), "asgard.icredit.settings");
+      $this->mergeConfigFrom($this->getModuleConfigFilePath('icredit', 'settings-fields'), "asgard.icredit.settings-fields");
+      $this->mergeConfigFrom($this->getModuleConfigFilePath('icredit', 'permissions'), "asgard.icredit.permissions");
+      
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
