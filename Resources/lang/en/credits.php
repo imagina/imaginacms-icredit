@@ -20,6 +20,10 @@ return [
     ],
     'form' => [
     ],
+  
+  'settings' => [
+    'icreditWithdrawalFundsForm' => 'Withdrawal funds form'
+  ],
     'messages' => [
         "WithdrawalFundsRequestWasCreated" => "You have a new request to withdraw funds from the client :requestUserName identified with ID number :requestableId, with a value of :requestAmount",
         "WithdrawalFundsRequestWasAcepted" => "Your withdrawal request #:requestableId has been approved, great!",
@@ -31,5 +35,16 @@ return [
     'descriptions' => [
         "orderWasCreated" => "Credit Applied to Order #:orderId",
         "WithdrawalFundsRequestWasEffected" => "Cash withdrawal applied by registration number #:requestableId"
+    ],
+  
+  'withdrawalFundsForm' => [
+    'form' => [
+      'title' => [
+        'single' => "Withdrawal funds form"
+      ],
+      'fields' => [
+        'amount' => "Amount"
+      ]
     ]
+  ]
 ];

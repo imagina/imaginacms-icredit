@@ -16,6 +16,8 @@ class IcreditDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
+  
+      $this->call(WithdrawalfundsFormTableSeeder::class);
 
         $name = config('asgard.icredit.config.name');
         $result = PaymentMethod::where('name',$name)->first();

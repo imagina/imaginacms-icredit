@@ -21,6 +21,9 @@ return [
     ],
     'form' => [
     ],
+  'settings' => [
+    'icreditWithdrawalFundsForm' => 'Formulario de retiro de fondos'
+  ],
     'messages' => [
         "WithdrawalFundsRequestWasCreated" => "Tiene una nueva solicitud de retiro de fondos por parte de cliente :requestUserName identificado con cedula numero :requestableId, por un valor de :requestAmount",
         "WithdrawalFundsRequestWasAcepted" => "Su solicitud de retiro de fondos #:requestableId ha sido aprobada, ¡Qué bien!",
@@ -32,5 +35,16 @@ return [
     'descriptions' => [
         "orderWasCreated" => "Credito aplicado por la orden #:orderId",
         "WithdrawalFundsRequestWasEffected" => "Retiro efectivo aplicado por la solicitud #:requestableId"
+    ],
+  
+  'withdrawalFundsForm' => [
+    'form' => [
+      'title' => [
+        'single' => "Formulario de retiro de fondos"
+      ],
+      'fields' => [
+        'amount' => "Monto"
+      ]
     ]
+  ]
 ];
