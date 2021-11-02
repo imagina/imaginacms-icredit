@@ -7,15 +7,15 @@ use Illuminate\Queue\SerializesModels;
 class WithdrawalFundsRequestWasAcepted
 {
     public $requestable;
+    public $oldRequest;
     public $notificationService;
-    public $requestUser;
-    public $requestConfig;
+    public $requestCreator;
 
-    public function __construct($requestable,$requestConfig,$requestUser)
+    public function __construct($requestable, $oldRequest)
     {
         $this->requestable = $requestable;
-        $this->requestUser = $requestUser;
-        $this->requestConfig = $requestConfig;
+        $this->oldRequest = $oldRequest;
+        $this->requestCreator = $oldRequest->creator();
         $this->notificationService = app("Modules\Notification\Services\Inotification");
     }
 
@@ -24,9 +24,9 @@ class WithdrawalFundsRequestWasAcepted
     {
 
         $this->notificationService->to([
-            "email" => $this->requestUser->email,
-            "broadcast" => $this->requestUser->id,
-            "push" => $this->requestUser->id,
+            "email" => $this->requestCreator->email,
+            "broadcast" => $this->requestCreator->id,
+            "push" => $this->requestCreator->id,
         ])->push(
             [
                 "title" => trans("icredit::credits.title.WithdrawalFundsRequestWasAcepted"),

@@ -22,7 +22,8 @@ return [
     'form' => [
     ],
   'settings' => [
-    'icreditWithdrawalFundsForm' => 'Formulario de retiro de fondos'
+    'icreditWithdrawalFundsForm' => 'Formulario de retiro de fondos',
+    'creditAmountCustomService' => 'Servicio custom para monto a la wallet',
   ],
     'messages' => [
         "WithdrawalFundsRequestWasCreated" => "Tiene una nueva solicitud de retiro de fondos por parte de cliente :requestUserName identificado con cedula numero :requestableId, por un valor de :requestAmount",
@@ -38,6 +39,9 @@ return [
     ],
   
   'withdrawalFundsForm' => [
+    "requestable" => [
+      "title" => "Retiro de Fondos"
+    ],
     'form' => [
       'title' => [
         'single' => "Formulario de retiro de fondos"

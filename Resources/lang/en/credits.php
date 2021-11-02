@@ -23,7 +23,9 @@ return [
     ],
   
   'settings' => [
-    'icreditWithdrawalFundsForm' => 'Withdrawal funds form'
+    'icreditWithdrawalFundsForm' => 'Withdrawal funds form',
+    'creditAmountCustomService' => 'Custom service for wallet amount',
+    
   ],
     'messages' => [
         "WithdrawalFundsRequestWasCreated" => "You have a new request to withdraw funds from the client :requestUserName identified with ID number :requestableId, with a value of :requestAmount",
@@ -39,6 +41,9 @@ return [
     ],
   
   'withdrawalFundsForm' => [
+    "requestable" => [
+      "title" => "withdrawal Funds"
+    ],
     'form' => [
       'title' => [
         'single' => "Withdrawal funds form"

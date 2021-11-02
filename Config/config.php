@@ -2,7 +2,7 @@
 
 return [
   'name' => 'Icredit',
-    'paymentName' => 'icredit',
+  'paymentName' => 'icredit',
   
   /*-----------------------------------------------------------------------------------------------------------------
   /* Status config description
@@ -17,78 +17,61 @@ return [
     13 => 1
   ],
   
-  /*
-|--------------------------------------------------------------------------
-| Requestable config
-|--------------------------------------------------------------------------
-*/
   "requestable" => [
     
-    [
+    1 => [
+      //Required: this is the identificator of the request, must be unique with respect to other requestable types
+      "type" => "withdrawalFunds",
+      
+      // Title can be trantaled or not, the language take the config app.locale
+      "title" => "icredit::credits.withdrawalFundsForm.requestable.title",
+      
+      // Time elapsed to cancel in days
+      "timeElapsedToCancel" => 30,
+      
+      /*
+       Optional: Path of the Entity related to the requestable
+       The requestable Id can be saved in the requestable
+       if the requestableType is  Modules\\User\\Entities\\Sentinel\\User the id can be taked automatically of the Auth User if the id it's not specified
+       */
+      "requestableType" => "Modules\\Icredit\\Entities\\Icredit",
+      
+      // Optional: this form is used to get the fields data of the requestable, need to be a setting name previously charged with the formId
+      "formId" => "icredit::icreditWithdrawalFundsForm",
+      
+      //requestable events to dispatch
+      "events" => [
+        "create" => "Modules\\Icredit\\Events\\WithdrawalFundsRequestWasCreated",
+      ],
+      
+      /*
+      The module has four statuses by default with the following structure:
+          const PENDING = 1; (default)
+          const INPROGRESS = 2;
+          const COMPLETED = 3; (final)
+          const CANCELLED = 4; (final)
+      */
       "useDefaultStatuses" => true,
       
-      'deleteWhenStatus' => [
+  
+      //if you don't use the statuses configuration but you need to configure the delete request by status you can use this extra config:
+      'deleteRequestWhenStatus' => [
         1 => false,
         2 => true,
         3 => false,
         4 => true
       ],
       
-      "type" => "withdrawalFunds",
-      "title" => " Withdrawal Funds",
-      
-      'defaultStatus' => 1,
-      
-      "events" => [
-        "create" => "Modules\\Icredit\\Events\\WithdrawalFundsRequestWasCreated",
-        //"update" => "Modules\\Iteam\\Events\\JoinToTeamRequestWasUpdated",
-        //"delete" => "Modules\\Fhia\\Events\\InspectionRequestWasDeleted",
-      ],
-      
-      "statusEvents" => [
+      //if you don't use the statuses configuration but you need to configure the events by status you can use this extra config:
+      "eventsWhenStatus" => [
         2 => "Modules\\Icredit\\Events\\WithdrawalFundsRequestWasAcepted",
         3 => "Modules\\Icredit\\Events\\WithdrawalFundsRequestWasRejected",
       ],
       
-      // Time elapsed to cancel in days
-      "timeElapsedToCancel" => 30,
-      
-      // "etaEvent" => "Modules\\Iteam\\Events\\JoinToTeamRequestWasAccepted",
-      
-      "rquestableId" => [
-        'value' => '',
-        "label" => "Credit",
-        'type' => 'number',
-        'loadEntity' => [
-          'apiRoute' => 'api.icredit.credits',
-        ]
-      ],
-      "requestableType" => "Modules\\Icredit\\Entities\\Credit",
-      "formId" => "icredit::icreditWithdrawalFundsForm",
-      
-      
-      "forms" => [
-        "main" => [
-          "name" => "main",
-          "label" => "General Info",
-          "fields" => [
-            "amount" => [
-              'value' => null,
-              'type' => 'input',
-              'props' => [
-                'type' => 'number',
-                'label' => 'Amount',
-              
-              ],
-            ],
-          ]
-        ],
-      
-      
-      ]
+      //Optional: if you don't use the statuses configuration but you need to configure the cancelled when elapsed time status you can use this extra config:
+      "statusToSetWhenElapsedTime" => 4,
+    
     ]
-  
-  
-  ]
+  ],
 
 ];

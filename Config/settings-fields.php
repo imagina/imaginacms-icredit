@@ -19,4 +19,16 @@ return [
       'clearable' => true,
     ],
   ],
+  
+  'creditAmountCustomService' => [
+    "onlySuperAdmin" => true,
+    'name' => 'icredit::creditAmountCustomService',
+    'value' => '',
+    'type' => 'input',
+    'columns' => 'col-12',
+    'props' => [
+      'label' => 'icredit::credits.settings.creditAmountCustomService',
+      'type' => 'text',
+    ],
+  ],
 ];

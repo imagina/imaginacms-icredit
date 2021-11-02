@@ -10,13 +10,13 @@ class WithdrawalFundsRequestWasRejected
     public $requestable;
     public $notificationService;
     public $requestUser;
-    public $requestConfig;
+    public $category;
 
-    public function __construct($requestable, $oldRequest, $requestConfig,$requestUser)
+    public function __construct($requestable, $oldRequest, $category,$requestUser)
     {
         $this->requestable = $requestable;
         $this->requestUser = $requestUser;
-        $this->requestConfig = $requestConfig;
+        $this->category = $category;
         $this->notificationService = app("Modules\Notification\Services\Inotification");
   
       $this->notification();

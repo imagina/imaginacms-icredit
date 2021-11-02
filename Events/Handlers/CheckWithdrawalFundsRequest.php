@@ -22,9 +22,10 @@ class CheckWithdrawalFundsRequest
     public function handle($event)
     {
         $requestable = $event->oldRequest;
-
+      $fields = $requestable->fields()->get();
+      $amount = $fields->where("name","amount")->first()->value;
         $this->creditRepository->create([
-            "amount" => $requestable->fields->amount * -1,
+            "amount" => $amount * -1,
             "status" => 2,
             "related_id" => $requestable->id,
             "related_type" => "Modules\Requestable\Entities\Requestable",

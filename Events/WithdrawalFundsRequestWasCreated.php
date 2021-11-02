@@ -10,13 +10,13 @@ class WithdrawalFundsRequestWasCreated
     public $requestable;
     public $notificationService;
     public $requestUser;
-    public $requestConfig;
 
-    public function __construct($requestable, $requestConfig, $requestUser)
+
+    public function __construct($requestable)
     {
         $this->requestable = $requestable;
         $this->requestUser = $requestUser;
-        $this->requestConfig = $requestConfig;
+
         $this->notificationService = app("Modules\Notification\Services\Inotification");
         
         $this->notification();
@@ -33,8 +33,9 @@ class WithdrawalFundsRequestWasCreated
 
         $users = User::whereIn("id", $usersToNotity)->get();
         $emailTo = array_merge($emailTo, $users->pluck('email')->toArray());
-
-
+  
+        $fields = $this->requestable->fields()->get();
+      $amount = $fields->where("name","amount")->first()->value;
         $this->notificationService->to([
             "email" => $emailTo,
             "broadcast" => $users->pluck('id')->toArray(),
@@ -42,7 +43,7 @@ class WithdrawalFundsRequestWasCreated
         ])->push(
             [
                 "title" => trans("icredit::credits.title.WithdrawalFundsRequestWasCreated"),
-                "message" => trans("icredit::credits.messages.WithdrawalFundsRequestWasCreated",["requestUserName" => $this->requestUser->present()->fullname,"requestAmount" => $this->requestable->fields->amount,"requestableId" => $this->requestable->id]),
+                "message" => trans("icredit::credits.messages.WithdrawalFundsRequestWasCreated",["requestUserName" => $this->requestUser->present()->fullname,"requestAmount" => $amount,"requestableId" => $this->requestable->id]),
                 "icon_class" => "fa fa-bell",
               "setting" => [
                 "saveInDatabase" => true
