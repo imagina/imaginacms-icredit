@@ -9,7 +9,7 @@ namespace Modules\Icredit\Entities;
 class Status
 {
     const PENDING = 1;
-    const AVAILABLE = 1;
+    const AVAILABLE = 2;
 
     /**
      * @var array
