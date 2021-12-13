@@ -26,7 +26,7 @@ class CheckCredit
       
       // Icommerce order entity
       $order = $event->order;
-      $items = $event->items;
+      //$items = $event->items;
       
       // finding credit object
       $params = ["filter" => ["field" => "related_id", "relatedType" => "Modules\Icommerce\Entities\Order"]];
@@ -63,7 +63,7 @@ class CheckCredit
       }
       
     } catch (\Exception $e) {
-      \Log::error("Error | SendOrder Event: " . $e->getMessage() . "\n" . $e->getFile() . "\n" . $e->getLine() . $e->getTraceAsString());
+      \Log::error("Error | Handler | Event - CheckCredit: " . $e->getMessage() . "\n" . $e->getFile() . "\n" . $e->getLine() . $e->getTraceAsString());
     }
   }
 }

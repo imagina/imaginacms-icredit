@@ -44,7 +44,10 @@ class CreditService
             $creditData = [
                 "ip" => request()->ip(),
                 "session_id" => session('_token'),
-                "user_id" => $data["userId"] ?? $data["customerId"] ?? \Auth::id()
+                "amount" => $data["amount"] ?? 0,
+                "user_id" => $data["userId"] ?? $data["customerId"] ?? \Auth::id(),
+                "description" => $data["description"] ?? "",
+                "status" => $data["status"] ?? 1
             ];
 
             //Create credit
