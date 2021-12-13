@@ -16,7 +16,7 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
         if (in_array('*', $params->include ?? [])) {//If Request all relationships
             $query->with([]);
         } else {//Especific relationships
-            $includeDefault = ['translations'];//Default relationships
+            $includeDefault = [];//Default relationships
             if (isset($params->include))//merge relations with default relationships
                 $includeDefault = array_merge($includeDefault, $params->include);
             $query->with($includeDefault);//Add Relationships to query
@@ -129,7 +129,7 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
         if (in_array('*', $params->include ?? [])) {//If Request all relationships
             $query->with([]);
         } else {//Especific relationships
-            $includeDefault = ['translations'];//Default relationships
+            $includeDefault = [];//Default relationships
             if (isset($params->include))//merge relations with default relationships
                 $includeDefault = array_merge($includeDefault, $params->include ?? []);
             $query->with($includeDefault);//Add Relationships to query
@@ -152,6 +152,7 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
             $translatedAttributes = $this->model->translatedAttributes;
 
             // filter by translatable attributes
+            /*
             if (isset($field) && in_array($field, $translatedAttributes))//Filter by slug
                 $query->whereHas('translations', function ($query) use ($criteria, $filter, $field) {
                     $query->where('locale', $filter->locale)
@@ -161,6 +162,8 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
                 // find by specific attribute or by id
                 $query->where($field ?? 'id', $criteria);
             }
+            */
+            $query->where($field ?? 'id', $criteria);
 
             //Filter by customer ID
             if (isset($filter->customerId)) {

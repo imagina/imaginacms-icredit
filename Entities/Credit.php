@@ -2,7 +2,6 @@
 
 namespace Modules\Icredit\Entities;
 
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Core\Traits\NamespacedEntity;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
