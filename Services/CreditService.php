@@ -42,13 +42,14 @@ class CreditService
         if($needTobeCreated) {
 
             $creditData = [
-                "ip" => request()->ip(),
-                "session_id" => session('_token'),
                 "amount" => $data["amount"] ?? 0,
-                "user_id" => $data["userId"] ?? $data["customerId"] ?? \Auth::id(),
+                "customer_id" => $data["customerId"] ?? null,
                 "description" => $data["description"] ?? "",
-                "status" => $data["status"] ?? 1
+                "status" => $data["status"] ?? 1,
+                "related_id" => $data["relatedId"] ?? null,
+                "related_type" => $data["relatedType"] ?? null
             ];
+
 
             //Create credit
             $credit = $this->credit->create($creditData);
