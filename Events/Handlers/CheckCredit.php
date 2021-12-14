@@ -20,6 +20,7 @@ class CheckCredit
   
   public function handle($event)
   {
+
     try {
       // Credit status config
       $orderStatusSync = config("asgard.icredit.config.orderStatusSync");
@@ -27,14 +28,17 @@ class CheckCredit
       // Icommerce order entity
       $order = $event->order;
       //$items = $event->items;
+
+      //\Log::info('============= Icredit: Handler - CheckCredit - Order: '.$order->id); 
       
       // finding credit object
       $params = ["filter" => ["field" => "related_id", "relatedType" => "Modules\Icommerce\Entities\Order"]];
-      $credit = $this->creditRepository->getItem(json_decode(json_encode($params)));
+      $credit = $this->creditRepository->getItem($order->id,json_decode(json_encode($params)));
       
       //if exist credit would be updated
       if (isset($credit->id)) {
         
+        //\Log::info('============= Icredit: Handler - CheckCredit - Update'); 
         // updating credit object
         $this->creditRepository->updateBy($credit->id, [
           "amount" => $order->total,
@@ -42,24 +46,30 @@ class CheckCredit
         ]);
         
       } else {//else credit would be created
-        
+
+        //\Log::info('============= Icredit: Handler - CheckCredit - Create - Order: '.$order->id);
+
         //service to customize the amount to insert in the wallet
         $customService = setting("icredit::creditAmountCustomService", null, "");
         
         if (!empty($customService)) {
           $customService = app($customService);
-          $amount = $customService->getAmount($event) ?? null;
+          //$amount = $customService->getAmount($event) ?? null;
+          $data = $customService->getData($event) ?? null;
         }
         
         // creating credit object
-        $this->creditRepository->create([
-          "amount" => $amount ?? $order->total ?? 0,
+        $dataToSave = [
+          "amount" => $data['amount'] ?? $order->total ?? 0,
           "status" => $orderStatusSync[$order->status_id] ?? 3,
           "related_id" => $order->id,
           "related_type" => "Modules\Icommerce\Entities\Order",
-          "customer_id" => $order->store->user_id,
+          "customer_id" => $data['userId'] ?? null,
           "description" => trans("icredit::credits.descriptions.orderWasCreated", ["orderId" => $order->id]),
-        ]);
+        ];
+
+        $this->creditRepository->create($dataToSave);
+
       }
       
     } catch (\Exception $e) {
