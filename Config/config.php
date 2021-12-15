@@ -11,10 +11,20 @@ return [
    * 3 => canceled / by default for all another order status
    *///---------------------------------------------------------------------------------------------------------------
   'orderStatusSync' => [
-    1 => 1,
-    2 => 1,
-    4 => 2,
-    13 => 2
+    1 => 1,   //pending
+    2 => 2,   //shipped
+    3 => 3,   //canceled
+    4 => 2,   //completed
+    5 => 3,   //denied
+    6 => 3,   //canceledreversal
+    7 => 3,   //failed
+    8 => 3,   //refunded
+    9 => 3,   //reserved
+    10 => 3,  //chargeback
+    11 => 1,  //pending
+    12 => 3,  //voided
+    13 => 2,  //processed
+    14 => 3   //expired
   ],
   
   "requestable" => [
