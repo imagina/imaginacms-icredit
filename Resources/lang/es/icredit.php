@@ -3,6 +3,7 @@ return [
   "name" => "Billetera",
    "status" => [
     'pending' => 'Pendiente',
-    'available' => 'Disponible'
+    'available' => 'Disponible',
+    'canceled' => 'Cancelado',
   ]
 ];

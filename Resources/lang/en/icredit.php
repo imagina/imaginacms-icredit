@@ -3,6 +3,7 @@ return [
   "name" => "Wallet",
   "status" => [
     'pending' => 'Pending',
-    'available' => 'Available'
+    'available' => 'Available',
+    'canceled' => 'Canceled',
   ]
 ];

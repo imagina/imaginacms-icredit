@@ -10,6 +10,7 @@ class Status
 {
     const PENDING = 1;
     const AVAILABLE = 2;
+    const CANCELED = 3;
 
     /**
      * @var array
@@ -21,6 +22,7 @@ class Status
         $this->statuses = [
             self::PENDING => trans('icredit::status.pending'),
             self::AVAILABLE => trans('icredit::status.available'),
+            self::CANCELED => trans('icredit::status.canceled'),
         ];
     }
 
