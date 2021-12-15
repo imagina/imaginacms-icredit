@@ -1,4 +1,8 @@
 <?php
 return [
-  "name" => "Wallet"
+  "name" => "Wallet",
+  "status" => [
+    'pending' => 'Pending',
+    'available' => 'Available'
+  ]
 ];

@@ -1,4 +1,8 @@
 <?php
 return [
-  "name" => "Billetera"
+  "name" => "Billetera",
+   "status" => [
+    'pending' => 'Pendiente',
+    'available' => 'Disponible'
+  ]
 ];
