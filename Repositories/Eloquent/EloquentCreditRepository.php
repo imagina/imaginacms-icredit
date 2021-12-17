@@ -27,7 +27,6 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
           $cart = $cartRepository->find($parameters["cartId"]);
         }
     
-
         // Validating Min Amount Order
         if(isset($conf->minimunAmount) && !empty($conf->minimunAmount)) {
             if (isset($cart->total) || isset($parameters["total"]))
@@ -39,10 +38,12 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
                 return $response;
               }
         }
-
+       
         // Validating User has credit
         $authUser = \Auth::user();
         if(isset($cart) && isset($authUser->id)){
+
+            //\Log::info('Icredit: EloquentCalculate|ValidateUserHasCredit');
 
             $paymentService = app('Modules\Icredit\Services\PaymentService');
 
@@ -51,7 +52,7 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
 
             // Process Payment Valid
             $processPayment = $paymentService->validateProcessPayment($credit,$cart->total);
-
+          
             if($processPayment==false){
                 $response["status"] = "error";
                 $response["msj"] = trans("icredit::icredit.validation.no credit");

@@ -21,7 +21,7 @@ class PaymentService
     * @param  $customer Id
     * @return
     */
-    function getCreditByUser($customerId){
+    public function getCreditByUser($customerId){
 
         // Get Credit
         $criteria = $customerId;
@@ -41,10 +41,14 @@ class PaymentService
     * @param  $total
     * @return
     */
-    function validateProcessPayment($credit,$total){
+    public function validateProcessPayment($credit,$total){
+
         $processPayment = false;
-        if($credit->amount>=$total){
-            $processPayment = true;
+
+        if(!is_null($credit)){
+            if($credit->amount>=$total){
+                $processPayment = true;
+            }
         }
 
         return $processPayment;
