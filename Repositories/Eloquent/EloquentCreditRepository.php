@@ -27,9 +27,21 @@ class EloquentCreditRepository extends EloquentBaseRepository implements CreditR
           $cart = $cartRepository->find($parameters["cartId"]);
         }
     
-        $authUser = \Auth::user();
+
+        // Validating Min Amount Order
+        if(isset($conf->minimunAmount) && !empty($conf->minimunAmount)) {
+            if (isset($cart->total) || isset($parameters["total"]))
+              if(($cart->total ?? $parameters["total"]) < $conf->minimunAmount){
+                
+                $response["status"] = "error";
+                $response["msj"] = trans("icommerce::common.validation.minimumAmount",["minimumAmount" =>formatMoney($conf->minimunAmount)]);
+
+                return $response;
+              }
+        }
 
         // Validating User has credit
+        $authUser = \Auth::user();
         if(isset($cart) && isset($authUser->id)){
 
             $paymentService = app('Modules\Icredit\Services\PaymentService');

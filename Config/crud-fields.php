@@ -54,6 +54,15 @@ return [
             'value' => 'Modules\Icredit\Http\Controllers\Api\PaymentApiController',
             'name' => 'init',
             'isFakeField' => true
-        ]
+        ],
+        'minimunAmount' => [
+          'value' => null,
+          'name' => 'minimunAmount',
+          'isFakeField' => true,
+          'type' => 'input',
+          'props' => [
+                'label' => 'icommerce::common.minimum Amount'
+          ]
+        ],
     ]
 ];
