@@ -7,6 +7,53 @@ use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 
 class EloquentCreditRepository extends EloquentBaseRepository implements CreditRepository
 {
+
+
+    /**
+     * Calculates in Checkout
+     *
+     * @param $parameters
+     * @param $conf
+     * @return 
+     */
+    public function calculate($parameters,$conf){
+  
+  
+        $response["status"] = "success";
+
+        // Search Cart
+        if(isset($parameters["cartId"])){
+          $cartRepository = app('Modules\Icommerce\Repositories\CartRepository');
+          $cart = $cartRepository->find($parameters["cartId"]);
+        }
+    
+        $authUser = \Auth::user();
+
+        // Validating User has credit
+        if(isset($cart) && isset($authUser->id)){
+
+            $paymentService = app('Modules\Icredit\Services\PaymentService');
+
+            // Get Credit
+            $credit = $paymentService->getCreditByUser($authUser->id);
+
+            // Process Payment Valid
+            $processPayment = $paymentService->validateProcessPayment($credit,$cart->total);
+
+            if($processPayment==false){
+                $response["status"] = "error";
+                $response["msj"] = trans("icredit::icredit.validation.no credit");
+
+                return $response;
+            }
+
+        }
+       
+
+        return $response;
+    
+    }
+
     public function getItemsBy($params)
     {
         // INITIALIZE QUERY

@@ -38,12 +38,12 @@ class PaymentService
     /**
     * Validate if process the payment  
     * @param  $credit
-    * @param  $order
+    * @param  $total
     * @return
     */
-    function validateProcessPayment($credit,$order){
+    function validateProcessPayment($credit,$total){
         $processPayment = false;
-        if($credit->amount>=$order->total){
+        if($credit->amount>=$total){
             $processPayment = true;
         }
 

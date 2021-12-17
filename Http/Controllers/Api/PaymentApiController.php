@@ -48,6 +48,33 @@ class PaymentApiController extends BaseApiController
         $this->paymentService = app('Modules\Icredit\Services\PaymentService');
     }
 
+
+    /**
+    * Init Calculations (Validations to checkout)
+    * @param Requests request
+    * @return mixed
+    */
+    public function calculations(Request $request)
+    {
+      
+      try {
+
+        $paymentMethod = icredit_getPaymentMethodConfiguration();
+        $response = $this->credit->calculate($request->all(), $paymentMethod->options);
+        
+      } catch (\Exception $e) {
+        //Message Error
+        $status = 500;
+        $response = [
+          'errors' => $e->getMessage()
+        ];
+      }
+      
+      return response()->json($response, $status ?? 200);
+    
+    }
+
+
     /**
      * ROUTE - Init data
      * @param Requests request
@@ -136,7 +163,7 @@ class PaymentApiController extends BaseApiController
             $credit = $this->paymentService->getCreditByUser($order->customer_id);
 
             // Process Payment Valid
-            $processPayment = $this->paymentService->validateProcessPayment($credit,$order);
+            $processPayment = $this->paymentService->validateProcessPayment($credit,$order->total);
 
             if($processPayment){
                 $newTotalCredit = $credit->amount - $order->total;  

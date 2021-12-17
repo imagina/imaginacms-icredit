@@ -13,4 +13,12 @@ class CacheCreditDecorator extends BaseCacheDecorator implements CreditRepositor
         $this->entityName = 'icredit.credits';
         $this->repository = $credit;
     }
+
+    public function calculate($parameters,$conf)
+    {
+        return $this->remember(function () use ($parameters,$conf) {
+            return $this->repository->calculate($parameters, $conf);
+        });
+    }
+    
 }
