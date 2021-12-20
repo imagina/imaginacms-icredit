@@ -31,6 +31,26 @@ class EloquentCreditRepository extends EloquentCrudRepository implements CreditR
      * if (isset($filter->status)) $query->where('status', $filter->status);
      *
      */
+
+
+        // Filter amount Available
+        if (isset($filter->amountAvailable)){
+
+            //AVAILABLE
+            $query->where('status',2);
+
+            //custom select
+            $query->select(
+                'customer_id',
+                \DB::raw('SUM(amount) as amount'),
+                );
+
+            //group by client Id
+            $query->groupBy("customer_id");
+
+        }
+        
+
         //Response
         return $query;
     }
@@ -95,30 +115,5 @@ class EloquentCreditRepository extends EloquentCrudRepository implements CreditR
         return $response;
     
     }
-
-   
-    /*
-    public function amount($params = false)
-    {
-
-        $params->onlyQuery = true;
-        
-        if(!isset($params->filter)) $params->filter = (object)[];
-  
-        $params->filter->status = 2;
-        $query = $this->getItemsBy($params);
-
-
-        //custom select
-        $query->select(
-            'customer_id',
-            \DB::raw('SUM(amount) as amount'),
-            );
-
-        //group by client Id
-        $query->groupBy("customer_id");
-        return $query->get();
-    }
-    */
 
 }
