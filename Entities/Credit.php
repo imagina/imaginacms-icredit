@@ -2,18 +2,22 @@
 
 namespace Modules\Icredit\Entities;
 
-use Illuminate\Database\Eloquent\Model;
-use Modules\Core\Traits\NamespacedEntity;
+use Modules\Core\Icrud\Entities\CrudModel;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Illuminate\Support\Str;
 
-class Credit extends Model
+class Credit extends CrudModel
 {
-  use NamespacedEntity,BelongsToTenant;
   
-  protected $table = 'icredit__credits';
-  protected static $entityNamespace = 'asgardcms/icreditCredit';
+  use BelongsToTenant;
+  
+  public $transformer = 'Modules\Icredit\Transformers\CreditTransformer';
+  public $requestValidation = [
+    'create' => 'Modules\Icredit\Http\Requests\CreateCreditRequest',
+    'update' => 'Modules\Icredit\Http\Requests\UpdateCreditRequest',
+  ];
 
+  protected $table = 'icredit__credits';
   protected $fillable = [
     'description',
     'customer_id',
