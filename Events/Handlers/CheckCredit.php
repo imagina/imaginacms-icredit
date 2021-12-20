@@ -44,7 +44,7 @@ class CheckCredit
         $this->creditRepository->updateBy($credit->id, [
           //"amount" => $order->total,
           "status" => $orderStatusSync[$order->status_id] ?? 3
-        ]);
+        ],null);
         
       } else {//else credit would be created
 
