@@ -10,9 +10,7 @@ $router->group(['prefix' => '/icredit/v1'], function (Router $router) {
         //'middleware' =>  ['create' => [],'update' => [],'delete' => [],'restore' => []]
     ]);
 
-    //======  AMOUNTS
-    require('ApiRoutes/amountRoutes.php');
-
+    
     //======  PaymentMethod
     require('ApiRoutes/paymentRoutes.php');
 
