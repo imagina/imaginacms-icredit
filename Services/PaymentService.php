@@ -43,8 +43,7 @@ class PaymentService
     public function getCreditAvailableForUser($userId){
 
         $credit = 0;
-        $credit = Credit::where('customer_id',$userId)->sum('amount');
-
+        $credit = Credit::where('customer_id',$userId)->where('status',2)->sum('amount');
         //\Log::info('Icredit: Services|getCreditAvailableForUser|Credit: '.$credit);
 
         return $credit;

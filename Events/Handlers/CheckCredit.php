@@ -21,17 +21,13 @@ class CheckCredit
   public function handle($event)
   {
 
-    \Log::info('Icredit: Events|Handler|CheckCredit');
-
     try {
       // Credit status config
       $orderStatusSync = config("asgard.icredit.config.orderStatusSync");
       
       // Icommerce order entity
       $order = $event->order;
-      //$items = $event->items;
-
-      //\Log::info('============= Icredit: Handler - CheckCredit - Order: '.$order->id); 
+      \Log::info('Icredit: Events|Handler|CheckCredit|Order: '.$order->id); 
       
       // finding credit object
       $params = ["filter" => ["field" => "related_id", "relatedType" => "Modules\Icommerce\Entities\Order"]];
