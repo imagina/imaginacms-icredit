@@ -49,30 +49,19 @@ class PublicController extends BasePublicController
             // Validate get data
             $order = $this->order->find($orderID);
             $transaction = $this->transaction->find($transactionID);
-           
-            // Get Payment Method Configuration
-            $paymentMethod = icredit_getPaymentMethodConfiguration();
-
-            // Get Credit
-            $credit = $this->paymentService->getCreditByUser($order->customer_id);
-
-            if(is_null($credit)){
-                throw new \Exception("Credit Not Found", 404);
-            }
-
-            //Process Payment Valid
-            $processPayment = $this->paymentService->validateProcessPayment($credit,$order);
+        
+            // Process Payment Valid
+            $authUser = \Auth::user();
+            $resultValidate = $this->paymentService->validateProcessPayment($authUser->id,$order->total);
 
             //View
             $tpl = 'icredit::frontend.payment.index';
-          
-            return view($tpl,compact('order','credit','processPayment','eURL'));
 
+            return view($tpl,compact('order','resultValidate','eURL'));
 
         } catch (\Exception $e) {
 
-            \Log::error('Module Icredit-Index: Message: '.$e->getMessage());
-            \Log::error('Module Icredit-Index: Code: '.$e->getCode());
+            \Log::error('Icredit: paymentIndex|Message: '.$e->getMessage().' | FILE: '.$e->getFile().' | LINE: '.$e->getLine());
 
             //Message Error
             $status = 500;

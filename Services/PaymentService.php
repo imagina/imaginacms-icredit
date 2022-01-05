@@ -36,22 +36,41 @@ class PaymentService
     }
 
     /**
+    * Get 
+    * @param  $customerId
+    * @return
+    */
+    public function getCreditAvailableForUser($userId){
+
+        $credit = 0;
+        $credit = Credit::where('customer_id',$userId)->sum('amount');
+
+        //\Log::info('Icredit: Services|getCreditAvailableForUser|Credit: '.$credit);
+
+        return $credit;
+    }
+
+    /**
     * Validate if process the payment  
     * @param  $credit
     * @param  $total
     * @return
     */
-    public function validateProcessPayment($credit,$total){
+    public function validateProcessPayment($userId,$total){
 
         $processPayment = false;
 
-        if(!is_null($credit)){
-            if($credit->amount>=$total){
-                $processPayment = true;
-            }
-        }
+        $creditUser = $this->getCreditAvailableForUser($userId);
 
-        return $processPayment;
+        if($creditUser>=$total)
+            $processPayment = true;
+        
+        // Response
+        return [
+            'processPayment' => $processPayment,
+            'creditUser' => $creditUser  
+        ];
+
     }
 
 }

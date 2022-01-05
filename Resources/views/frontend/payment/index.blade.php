@@ -25,7 +25,7 @@
             @include('icredit::frontend.payment.partials.approved')
           </div>
 
-          @if(!$processPayment)
+          @if(!$resultValidate['processPayment'])
             <div class="alert alert-danger" role="alert">
               No posee el Credito Suficiente para realizar el pago
             </div>

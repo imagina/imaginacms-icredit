@@ -28,7 +28,7 @@
 
       <tr>
         <th scope="row">Credito Disponible:</th>
-        <td>{{$credit->amount}}</td>
+        <td>{{$resultValidate['creditUser']}}</td>
       </tr>
       
     </tbody>

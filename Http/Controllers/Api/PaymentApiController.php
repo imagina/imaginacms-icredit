@@ -156,24 +156,32 @@ class PaymentApiController extends BaseApiController
             $order = $this->order->find($infor[0]);
             $transactionId = $infor[1];
 
-            \Log::info('Module Icredit: processPayment - OrderID: '.$order->id);
-            \Log::info('Module Icredit: processPayment - TransactionID: '.$transactionId);
-
-            // Get Credit
-            $credit = $this->paymentService->getCreditByUser($order->customer_id);
+            \Log::info('Icredit: processPayment|OrderID: '.$order->id);
+            \Log::info('Icredit: processPayment|TransactionID: '.$transactionId);
 
             // Process Payment Valid
-            $processPayment = $this->paymentService->validateProcessPayment($credit,$order->total);
+            $authUser = \Auth::user();
+            $resultValidate = $this->paymentService->validateProcessPayment($authUser->id,$order->total);
 
-            if($processPayment){
-                $newTotalCredit = $credit->amount - $order->total;  
-                \Log::info('Module Icredit: processPayment - newTotalCredit: '.$newTotalCredit);
+            if($resultValidate['processPayment']){
 
-                $this->credit->update($credit,['amount'=>$newTotalCredit]);
+                // Create a credit
+                $data = [
+                    'amount' => -$order->total,
+                    'customerId' => $authUser->id,
+                    'description' => 'Pago de Orden #'.$order->id,
+                    'status' => 2,
+                    'relatedId' => $order->id,
+                    'relatedType' => get_class($order)
+                ];
+                $creditCreated = app("Modules\Icredit\Services\CreditService")->create($data);
 
+                //Updating Information
                 $newStatusOrder = 13; //Processed
-
                 $this->updateInformation($order->id,$transactionId,$newStatusOrder);
+
+                // Extra infor
+                $newTotalCredit = $resultValidate['creditUser'] - $order->total;  
 
                 $dataResult["success"] = true;
                 $dataResult["data"] = [
@@ -188,8 +196,7 @@ class PaymentApiController extends BaseApiController
             $response = [
               'errors' => $e->getMessage()
             ];
-            \Log::error('Module Icredit: Create Payment - Message: '.$e->getMessage());
-            \Log::error('Module Icredit: Create Payment - Code: '.$e->getCode());
+            \Log::error('Icredit: PaymentApiController|processPayment|Message: '.$e->getMessage().' | FILE: '.$e->getFile().' | LINE: '.$e->getLine());
         }
 
         return response()->json($response, $status ?? 200);

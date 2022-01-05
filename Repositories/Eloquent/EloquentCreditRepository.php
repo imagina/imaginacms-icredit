@@ -91,25 +91,21 @@ class EloquentCreditRepository extends EloquentCrudRepository implements CreditR
         $authUser = \Auth::user();
         if(isset($cart) && isset($authUser->id)){
 
-            //\Log::info('Icredit: EloquentCalculate|ValidateUserHasCredit');
-
             $paymentService = app('Modules\Icredit\Services\PaymentService');
 
-            // Get Credit
-            $credit = $paymentService->getCreditByUser($authUser->id);
-
-            // Process Payment Valid
-            $processPayment = $paymentService->validateProcessPayment($credit,$cart->total);
+            //Process Payment Valid
+            $result = $paymentService->validateProcessPayment($authUser->id,$cart->total);
           
-            if($processPayment==false){
+            if($result['processPayment']==false){
                 $response["status"] = "error";
-                $response["msj"] = trans("icredit::icredit.validation.no credit");
+                $response["msj"] = trans("icredit::icredit.validation.no credit",["creditUser" => formatMoney($result['creditUser'])]);
 
                 return $response;
             }
 
         }
         */
+       
        
 
         return $response;
