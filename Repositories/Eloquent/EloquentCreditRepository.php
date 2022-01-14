@@ -86,28 +86,33 @@ class EloquentCreditRepository extends EloquentCrudRepository implements CreditR
               }
         }
        
-        // Validating User has credit
-        /*
-        $authUser = \Auth::user();
-        if(isset($cart) && isset($authUser->id)){
+        //\Log::info('Icredit: EloquentCreditRepository|Calculate|Parameters: '.json_encode($parameters['extra']));
 
-            $paymentService = app('Modules\Icredit\Services\PaymentService');
+        //This validation will only be executed in the checkout or when is creating an order and not exist parentId (Is a Parent Order)
+        if(!isset($parameters['extra']->parentId)){
+            
+            // Validating User has credit
+            $authUser = \Auth::user();
+            if(isset($cart) && isset($authUser->id)){
 
-            //Process Payment Valid
-            $result = $paymentService->validateProcessPayment($authUser->id,$cart->total);
-          
-            if($result['processPayment']==false){
-                $response["status"] = "error";
-                $response["msj"] = trans("icredit::icredit.validation.no credit",["creditUser" => formatMoney($result['creditUser'])]);
+                $paymentService = app('Modules\Icredit\Services\PaymentService');
 
-                return $response;
+                //Process Payment Valid
+                $result = $paymentService->validateProcessPayment($authUser->id,$cart->total);
+              
+                //\Log::info('Icredit: EloquentCreditRepository|Calculate|ProcessPayment: '.$result['processPayment']);
+
+                if($result['processPayment']==false){
+                    $response["status"] = "error";
+                    $response["msj"] = trans("icredit::icredit.validation.no credit",["creditUser" => formatMoney($result['creditUser'])]);
+
+                    return $response;
+                }
+
             }
 
         }
-        */
        
-       
-
         return $response;
     
     }
