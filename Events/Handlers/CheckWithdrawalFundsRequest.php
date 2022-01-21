@@ -21,9 +21,12 @@ class CheckWithdrawalFundsRequest
 
     public function handle($event)
     {
+
+        \Log::info('Icredit: Events|Handler|CheckWithdrawalFundsRequest');
+
         $requestable = $event->oldRequest;
-      $fields = $requestable->fields()->get();
-      $amount = $fields->where("name","amount")->first()->value;
+        $fields = $requestable->fields()->get();
+        $amount = $fields->where("name","amount")->first()->value;
         $this->creditRepository->create([
             "amount" => $amount * -1,
             "status" => 2,

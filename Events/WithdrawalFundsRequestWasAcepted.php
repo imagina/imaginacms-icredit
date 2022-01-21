@@ -13,6 +13,9 @@ class WithdrawalFundsRequestWasAcepted
 
     public function __construct($requestable, $oldRequest)
     {
+
+        \Log::info('Icredit: Events|Handler|WithdrawalFundsRequestWasAcepted');
+        
         $this->requestable = $requestable;
         $this->oldRequest = $oldRequest;
         $this->requestCreator = $oldRequest->creator();
