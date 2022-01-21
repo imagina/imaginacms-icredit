@@ -14,7 +14,7 @@ class WithdrawalFundsRequestWasRejected
     public function __construct($requestable, $oldRequest, $category)
     {
 
-        \Log::info('Icredit: Events|WithdrawalFundsRequestWasRejected|Requestable: '.json_encode($requestable));
+        //\Log::info('Icredit: Events|WithdrawalFundsRequestWasRejected|Requestable: '.json_encode($requestable));
 
         $this->requestable = $requestable;
         $this->category = $category;
@@ -48,9 +48,9 @@ class WithdrawalFundsRequestWasRejected
                 "title" => trans("icredit::credits.title.WithdrawalFundsRequestWasRejacted"),
                 "message" => trans("icredit::credits.messages.WithdrawalFundsRequestWasRejacted",["requestableId" => $this->requestable->id,"emailTo" => join($emailTo,",")]),
                 "icon_class" => "fa fa-bell",
-              "setting" => [
-                "saveInDatabase" => true
-              ]
+                "setting" => [
+                    "saveInDatabase" => true
+                ]
 
             ]
         );
