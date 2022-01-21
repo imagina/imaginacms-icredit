@@ -75,7 +75,7 @@ return [
       //if you don't use the statuses configuration but you need to configure the events by status you can use this extra config:
       "eventsWhenStatus" => [
         2 => "Modules\\Icredit\\Events\\WithdrawalFundsRequestWasAcepted",
-        3 => "Modules\\Icredit\\Events\\WithdrawalFundsRequestWasRejected",
+        4 => "Modules\\Icredit\\Events\\WithdrawalFundsRequestWasRejected",
       ],
       
       //Optional: if you don't use the statuses configuration but you need to configure the cancelled when elapsed time status you can use this extra config:
