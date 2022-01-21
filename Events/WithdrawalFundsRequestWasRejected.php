@@ -9,22 +9,26 @@ class WithdrawalFundsRequestWasRejected
 {
     public $requestable;
     public $notificationService;
-    public $requestUser;
     public $category;
 
-    public function __construct($requestable, $oldRequest, $category,$requestUser)
+    public function __construct($requestable, $oldRequest, $category)
     {
+
+        \Log::info('Icredit: Events|WithdrawalFundsRequestWasRejected|Requestable: '.json_encode($requestable));
+
         $this->requestable = $requestable;
-        $this->requestUser = $requestUser;
         $this->category = $category;
         $this->notificationService = app("Modules\Notification\Services\Inotification");
   
-      $this->notification();
+        $this->notification();
     }
 
 
     public function notification()
     {
+
+        \Log::info('Icredit: Events|WithdrawalFundsRequestWasRejected|Notification');
+
         $emailTo = json_decode(setting("icommerce::form-emails", null, "[]"));
         $usersToNotity = json_decode(setting("icommerce::usersToNotify", null, "[]"));
 
@@ -36,9 +40,9 @@ class WithdrawalFundsRequestWasRejected
 
 
         $this->notificationService->to([
-            "email" =>  $this->requestUser->email,
-            "broadcast" =>  $this->requestUser->id,
-            "push" =>  $this->requestUser->id,
+            "email" =>  $this->requestable->createdByUser->email,
+            "broadcast" =>  $this->requestable->createdByUser->id,
+            "push" =>  $this->requestable->createdByUser->id,
         ])->push(
             [
                 "title" => trans("icredit::credits.title.WithdrawalFundsRequestWasRejacted"),
