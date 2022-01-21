@@ -9,22 +9,22 @@ class WithdrawalFundsRequestWasCreated
 {
     public $requestable;
     public $notificationService;
-    public $requestUser;
-
-
+    
     public function __construct($requestable)
     {
-        $this->requestable = $requestable;
-        $this->requestUser = $requestUser;
 
+        //\Log::info('Icredit: Events|WithdrawalFundsRequestWasCreated|Requestable: '.json_encode($requestable));
+        $this->requestable = $requestable;
         $this->notificationService = app("Modules\Notification\Services\Inotification");
-        
         $this->notification();
     }
 
 
     public function notification()
     {
+
+        \Log::info('Icredit: Events|WithdrawalFundsRequestWasCreated|Notification');
+
         $emailTo = json_decode(setting("icommerce::form-emails", null, "[]"));
         $usersToNotity = json_decode(setting("icommerce::usersToNotify", null, "[]"));
 
@@ -34,8 +34,12 @@ class WithdrawalFundsRequestWasCreated
         $users = User::whereIn("id", $usersToNotity)->get();
         $emailTo = array_merge($emailTo, $users->pluck('email')->toArray());
   
+        // PD: Relation from trait IsFillable
         $fields = $this->requestable->fields()->get();
-      $amount = $fields->where("name","amount")->first()->value;
+        $amount = $fields->where("name","amount")->first()->value;
+
+        //\Log::info('Icredit: Events|WithdrawalFundsRequestWasCreated|Notification|Amount: '.$amount);
+
         $this->notificationService->to([
             "email" => $emailTo,
             "broadcast" => $users->pluck('id')->toArray(),
@@ -43,7 +47,7 @@ class WithdrawalFundsRequestWasCreated
         ])->push(
             [
                 "title" => trans("icredit::credits.title.WithdrawalFundsRequestWasCreated"),
-                "message" => trans("icredit::credits.messages.WithdrawalFundsRequestWasCreated",["requestUserName" => $this->requestUser->present()->fullname,"requestAmount" => $amount,"requestableId" => $this->requestable->id]),
+                "message" => trans("icredit::credits.messages.WithdrawalFundsRequestWasCreated",["requestUserName" => $this->requestable->createdByUser->present()->fullname,"requestAmount" => $amount,"requestableId" => $this->requestable->id]),
                 "icon_class" => "fa fa-bell",
               "setting" => [
                 "saveInDatabase" => true
