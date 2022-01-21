@@ -14,22 +14,25 @@ class WithdrawalFundsRequestWasAcepted
     public function __construct($requestable, $oldRequest)
     {
 
-        \Log::info('Icredit: Events|Handler|WithdrawalFundsRequestWasAcepted');
-        
+        //\Log::info('Icredit: Events|WithdrawalFundsRequestWasAcepted|Requestable: '.json_encode($requestable));
+
         $this->requestable = $requestable;
         $this->oldRequest = $oldRequest;
-        $this->requestCreator = $oldRequest->creator();
         $this->notificationService = app("Modules\Notification\Services\Inotification");
+
+        $this->notification();
     }
 
 
     public function notification()
     {
 
+        //\Log::info('Icredit: Events|WithdrawalFundsRequestWasAcepted|Notification');
+
         $this->notificationService->to([
-            "email" => $this->requestCreator->email,
-            "broadcast" => $this->requestCreator->id,
-            "push" => $this->requestCreator->id,
+            "email" =>  $this->requestable->createdByUser->email,
+            "broadcast" => $this->requestable->createdByUser->id,
+            "push" => $this->requestable->createdByUser->id
         ])->push(
             [
                 "title" => trans("icredit::credits.title.WithdrawalFundsRequestWasAcepted"),
@@ -37,6 +40,9 @@ class WithdrawalFundsRequestWasAcepted
                     trans("icredit::credits.messages.WithdrawalFundsRequestWasAceptedWithETA",["requestableId" => $this->requestable->id,"requestableETA" => $this->requestable->eta])
                     : trans("icredit::credits.messages.WithdrawalFundsRequestWasAcepted",["requestableId" => $this->requestable->id]),
                 "icon_class" => "fa fa-bell",
+                "setting" => [
+                    "saveInDatabase" => true
+                ]
 
             ]
         );
