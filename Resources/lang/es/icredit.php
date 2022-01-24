@@ -2,7 +2,7 @@
 return [
   "name" => "Billetera",
   'validation' => [
-    'no credit' => 'Credito insuficiente (:creditUser) para seleccionar este metodo de pago'
+    'no credit' => 'Crédito insuficiente (:creditUser)'
   ],
    "status" => [
     'pending' => 'Pendiente',

@@ -2,7 +2,7 @@
 return [
   "name" => "Wallet",
   'validation' => [
-    'no credit' => 'Insufficient credit for this payment method'
+    'no credit' => 'Insufficient credit'
   ],
   "status" => [
     'pending' => 'Pending',
