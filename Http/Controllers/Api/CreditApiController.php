@@ -18,15 +18,21 @@ class CreditApiController extends BaseCrudController
     public $model;
     public $modelRepository;
 
+    private $paymentService;
+
     public function __construct(Credit $model, CreditRepository $modelRepository)
     {
         $this->model = $model;
         $this->modelRepository = $modelRepository;
+
+        $this->paymentService = app('Modules\Icredit\Services\PaymentService');
     }
 
 
-    /*
+    /**
     * WithdrawalFunds with Requestable Module
+    * @param Request $attribute['amount']
+    * @return Requestable Transformer
     */
     public function withdrawalFunds(Request $request)
     {
@@ -41,6 +47,15 @@ class CreditApiController extends BaseCrudController
                 $this->validateRequestApi(new $this->model->requestValidation['withdrawalFunds']($modelData));
             }
 
+            
+            // Process Payment Valid
+            $authUser = \Auth::user();
+            $resultValidate = $this->paymentService->validateProcessPayment($authUser->id,$modelData['amount']);
+
+            if(!$resultValidate['processPayment'])
+                throw new \Exception(trans("icredit::icredit.validation.no credit",['creditUser' => $resultValidate['creditUser']]), 500);
+
+
             // Requestable Service
             $modelData['type'] = "withdrawalFunds";
             $model = app('Modules\Requestable\Services\RequestableService')->create($modelData);
@@ -52,7 +67,7 @@ class CreditApiController extends BaseCrudController
 
         } catch (\Exception $e) {
 
-            \Log::error('Icredit: CreditApiController|withdrawalFunds|Message: '.$e->getMessage().' | FILE: '.$e->getFile().' | LINE: '.$e->getLine());
+            \Log::error('Icredit: CreditApiController|withdrawalFunds|Message: '.$e->getMessage());
 
             \DB::rollback();//Rollback to Data Base
             $status = $this->getStatusError($e->getCode());
