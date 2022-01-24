@@ -15,6 +15,7 @@ class Credit extends CrudModel
   public $requestValidation = [
     'create' => 'Modules\Icredit\Http\Requests\CreateCreditRequest',
     'update' => 'Modules\Icredit\Http\Requests\UpdateCreditRequest',
+    'withdrawalFunds' => 'Modules\Icredit\Http\Requests\WithdrawalFundsCreditRequest'
   ];
 
   protected $table = 'icredit__credits';
