@@ -43,7 +43,9 @@ class EloquentCreditRepository extends EloquentCrudRepository implements CreditR
             $query->select(
                 'customer_id',
                 \DB::raw('SUM(amount) as amount'),
-                );
+                \DB::raw('SUM(CASE WHEN amount>=0 THEN amount ELSE 0 END) as amountIn'),
+                \DB::raw('SUM(CASE WHEN amount<0 THEN amount ELSE 0 END) as amountOut'),
+            );
 
             //group by client Id
             $query->groupBy("customer_id");
