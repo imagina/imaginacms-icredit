@@ -4,9 +4,4 @@ return [
   'validation' => [
     'no credit' => 'Crédito insuficiente (:creditUser)'
   ],
-   "status" => [
-    'pending' => 'Pendiente',
-    'available' => 'Disponible',
-    'canceled' => 'Cancelado',
-  ]
 ];

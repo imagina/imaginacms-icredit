@@ -6,11 +6,14 @@ use Modules\Core\Icrud\Entities\CrudModel;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Illuminate\Support\Str;
 
+//Static Classes
+use Modules\Icredit\Entities\Status;
+
 class Credit extends CrudModel
 {
-  
+
   use BelongsToTenant;
-  
+
   public $transformer = 'Modules\Icredit\Transformers\CreditTransformer';
   public $requestValidation = [
     'create' => 'Modules\Icredit\Http\Requests\CreateCreditRequest',
@@ -29,13 +32,21 @@ class Credit extends CrudModel
     'related_id',
     'related_type',
   ];
-  
+
   public function customer()
   {
     $driver = config('asgard.user.config.driver');
     return $this->belongsTo("Modules\\User\\Entities\\{$driver}\\User", 'customer_id');
   }
-  
+
+  //============== MUTATORS / ACCESORS ==============//
+
+  public function getStatusNameAttribute()
+  {
+        $status = new Status();
+        return $status->get($this->status);
+  }
+
   public function getOptioqnsAttribute($value)
   {
     try {

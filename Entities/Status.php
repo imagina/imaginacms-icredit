@@ -20,9 +20,9 @@ class Status
     public function __construct()
     {
         $this->statuses = [
-            self::PENDING => trans('icredit::status.pending'),
-            self::AVAILABLE => trans('icredit::status.available'),
-            self::CANCELED => trans('icredit::status.canceled'),
+            self::PENDING => trans('icredit::credits.status.pending'),
+            self::AVAILABLE => trans('icredit::credits.status.available'),
+            self::CANCELED => trans('icredit::credits.status.canceled'),
         ];
     }
 

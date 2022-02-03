@@ -50,5 +50,14 @@ return [
         'amount' => "Monto"
       ]
     ]
+  ],
+
+  "status" => [
+    'pending' => 'Pendiente',
+    'available' => 'Disponible',
+    'canceled' => 'Cancelado',
   ]
+
+
+
 ];
