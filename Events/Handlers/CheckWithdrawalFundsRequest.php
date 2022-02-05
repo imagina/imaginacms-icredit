@@ -9,31 +9,26 @@ use Modules\Notification\Services\Notification;
 
 class CheckWithdrawalFundsRequest
 {
+  
+  public $creditRepository;
+  
+  public function __construct(CreditRepository $creditRepository)
+  {
+    $this->creditRepository = $creditRepository;
+  }
+  
+  public function handle($event)
+  {
+    
+    \Log::info('Icredit: Events|Handler|CheckWithdrawalFundsRequest');
+    
+    $requestable = $event->oldRequest;
 
-    public $creditRepository;
+    $credit = $this->creditRepository->getItem($requestable->id,json_decode(json_encode(["filter" => ["field" => "related_id","relatedType" => get_class($requestable)]])));
 
-    public function __construct(CreditRepository $creditRepository)
-    {
-        $this->creditRepository = $creditRepository;
-
-    }
-
-
-    public function handle($event)
-    {
-
-        \Log::info('Icredit: Events|Handler|CheckWithdrawalFundsRequest');
-
-        $requestable = $event->oldRequest;
-        $fields = $requestable->fields()->get();
-        $amount = $fields->where("name","amount")->first()->value;
-        $this->creditRepository->create([
-            "amount" => $amount * -1,
-            "status" => 2,
-            "related_id" => $requestable->id,
-            "related_type" => "Modules\Requestable\Entities\Requestable",
-            "customer_id" => $requestable->created_by,
-            "description" => trans("icredit::credits.descriptions.WithdrawalFundsRequestWasEffected",["requestableId" => $requestable->id]),
-        ]);
-    }
+    $credit->status = 2;
+    $credit->description = trans("icredit::credits.descriptions.WithdrawalFundsRequestWasEffected", ["requestableId" => $requestable->id]);
+    $credit->save();
+    
+  }
 }

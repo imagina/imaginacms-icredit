@@ -9,7 +9,7 @@ namespace Modules\Icredit\Entities;
 class Status
 {
     const PENDING = 1;
-    const AVAILABLE = 2;
+    const APPROVED = 2;
     const CANCELED = 3;
 
     /**
@@ -21,7 +21,7 @@ class Status
     {
         $this->statuses = [
             self::PENDING => trans('icredit::credits.status.pending'),
-            self::AVAILABLE => trans('icredit::credits.status.available'),
+            self::APPROVED => trans('icredit::credits.status.approved'),
             self::CANCELED => trans('icredit::credits.status.canceled'),
         ];
     }

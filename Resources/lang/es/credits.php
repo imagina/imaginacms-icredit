@@ -9,9 +9,10 @@ return [
         'credits' => 'Créditos',
         'create credit' => 'Crear un credito',
         'edit credit' => 'Editar un credito',
+        "WithdrawalFundsRequestInProgress" => "Tu solicitud de retiro de fondos Nro. :requestableId  se encuentra en estado de progreso",
         "WithdrawalFundsRequestWasCreated" => "Tiene un nueva solicitud de retiro de fondos",
-        "WithdrawalFundsRequestWasAcepted" => "Su solicitud para retirar fondos ha sido aprobada",
-        "WithdrawalFundsRequestWasRejacted" => "Su solicitud para retirar fondos ha sido rechazada",
+        "WithdrawalFundsRequestWasAccepted" => "Su solicitud para retirar fondos ha sido aprobada",
+        "WithdrawalFundsRequestWasRejected" => "Su solicitud para retirar fondos ha sido rechazada",
     ],
     'description' => "La descripcion del Modulo",
     'button' => [
@@ -26,16 +27,19 @@ return [
     'creditAmountCustomService' => 'Servicio custom para monto a la wallet',
   ],
     'messages' => [
+        "WithdrawalFundsRequestInProgress" => "Tu solicitud se encuentra en progreso, te notificaremos cuando se culmine todo el proceso",
         "WithdrawalFundsRequestWasCreated" => "Tiene una nueva solicitud de retiro de fondos por parte de cliente :requestUserName identificado con cedula numero :requestableId, por un valor de :requestAmount",
-        "WithdrawalFundsRequestWasAcepted" => "Su solicitud de retiro de fondos #:requestableId ha sido aprobada, ¡Qué bien!",
-        "WithdrawalFundsRequestWasAceptedWithETA" => "Su solicitud de retiro de fondos #:requestableId ha sido aprobada, y lo tendrás disponible para la fecha :requestableETA, ¡Qué bien!",
-        "WithdrawalFundsRequestWasRejacted" => "Su solicitud para retirar fondos #:requestableId, ha sido rechazada para mayor informaccion comunicarce al :emailTo",
+        "WithdrawalFundsRequestWasAccepted" => "Su solicitud de retiro de fondos Nro. :requestableId ha sido aprobada, ¡Qué bien!",
+        "WithdrawalFundsRequestWasAcceptedWithETA" => "Su solicitud de retiro de fondos Nro. :requestableId ha sido aprobada, y lo tendrás disponible para la fecha :requestableETA, ¡Qué bien!",
+        "WithdrawalFundsRequestWasRejected" => "Su solicitud para retirar fondos Nro. :requestableId, ha sido rechazada para mayor informaccion comunicarce al :emailTo",
     ],
     'validation' => [
     ],
     'descriptions' => [
-        "orderWasCreated" => "Credito aplicado por la orden #:orderId",
-        "WithdrawalFundsRequestWasEffected" => "Retiro efectivo aplicado por la solicitud #:requestableId"
+        "orderWasCreated" => "Credito aplicado por la orden Nro. :orderId",
+        "WithdrawalFundsRequestWasEffected" => "Retiro efectivo aplicado por la solicitud Nro. :requestableId",
+        "WithdrawalFundsRequestWasCreated" => "Solicitud de Retiro de fondos Nro. :requestableId",
+        "WithdrawalFundsRequestWasRejected" => "Retiro de fondos Rechazado"
     ],
   
   'withdrawalFundsForm' => [
@@ -54,7 +58,7 @@ return [
 
   "status" => [
     'pending' => 'Pendiente',
-    'available' => 'Disponible',
+    'approved' => 'Aprobado',
     'canceled' => 'Cancelado',
   ]
 

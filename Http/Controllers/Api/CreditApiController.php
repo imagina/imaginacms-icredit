@@ -59,6 +59,15 @@ class CreditApiController extends BaseCrudController
             // Requestable Service
             $modelData['type'] = "withdrawalFunds";
             $model = app('Modules\Requestable\Services\RequestableService')->create($modelData);
+
+          app('Modules\Icredit\Services\CreditService')->create( [
+            "amount" => $modelData["amount"]*-1 ?? 0,
+            "customerId" => $authUser->id ?? null,
+            "description" => trans("icredit::credits.descriptions.WithdrawalFundsRequestWasCreated",["requestableId" => $model->id]) ?? "",
+            "status" => 1,
+            "relatedId" => $model->id,
+            "relatedType" => get_class($model)
+          ]);
           
             //Response type Requestable Transformer
             $response = ["data" => new RequestableTransformer($model)];
@@ -71,9 +80,9 @@ class CreditApiController extends BaseCrudController
 
             \DB::rollback();//Rollback to Data Base
             $status = $this->getStatusError($e->getCode());
-            $response = ["errors" => $e->getMessage()];
+            $response = ["messages" => [["message" => $e->getMessage(), "type" => "error"]]];
+          
         }
-
         //Return response
         return response()->json($response, $status ?? 200);
     }

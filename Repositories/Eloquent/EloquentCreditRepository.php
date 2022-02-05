@@ -36,15 +36,13 @@ class EloquentCreditRepository extends EloquentCrudRepository implements CreditR
         // Filter amount Available
         if (isset($filter->amountAvailable)){
 
-            //AVAILABLE
-            $query->where('status',2);
-
             //custom select
             $query->select(
                 'customer_id',
-                \DB::raw('SUM(amount) as amount'),
-                \DB::raw('SUM(CASE WHEN amount>=0 THEN amount ELSE 0 END) as amountIn'),
-                \DB::raw('SUM(CASE WHEN amount<0 THEN amount ELSE 0 END) as amountOut'),
+                \DB::raw('SUM(CASE WHEN status!=3 THEN amount ELSE 0 END) as amount'),
+                \DB::raw('SUM(CASE WHEN status=2 and amount>=0 THEN amount ELSE 0 END) as amountIn'),
+                \DB::raw('SUM(CASE WHEN status=2 and amount<0 THEN amount ELSE 0 END) as amountOut'),
+                \DB::raw('SUM(CASE WHEN status=1 THEN amount ELSE 0 END) as amountPending'),
             );
 
             //group by client Id

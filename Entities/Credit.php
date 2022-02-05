@@ -11,8 +11,7 @@ use Modules\Icredit\Entities\Status;
 
 class Credit extends CrudModel
 {
-
-  use BelongsToTenant;
+  
 
   public $transformer = 'Modules\Icredit\Transformers\CreditTransformer';
   public $requestValidation = [
