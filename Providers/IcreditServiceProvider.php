@@ -42,11 +42,12 @@ class IcreditServiceProvider extends ServiceProvider
     {
         $this->publishConfig('icredit', 'config');
         $this->publishConfig('icredit', 'crud-fields');
-  
+
       $this->mergeConfigFrom($this->getModuleConfigFilePath('icredit', 'settings'), "asgard.icredit.settings");
       $this->mergeConfigFrom($this->getModuleConfigFilePath('icredit', 'settings-fields'), "asgard.icredit.settings-fields");
       $this->mergeConfigFrom($this->getModuleConfigFilePath('icredit', 'permissions'), "asgard.icredit.permissions");
-      
+      $this->mergeConfigFrom($this->getModuleConfigFilePath('icredit', 'cmsPages'), "asgard.icredit.cmsPages");
+
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
