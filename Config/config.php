@@ -84,4 +84,18 @@ return [
     ]
   ],
 
+  /*
+  *
+  * Config to Activities in Igamification Module
+  */
+  'activities' => [
+      [
+        'system_name' => 'setup-wallet',
+        'title' => 'icredit::activities.setup-wallet.title',
+        'description' => 'icredit::activities.setup-wallet.description',
+        'status' => 1,
+        'url' => 'ipanel/#/credit/wallet/'
+      ]
+  ]
+
 ];
