@@ -49,7 +49,7 @@ class IcreditServiceProvider extends ServiceProvider
       $this->mergeConfigFrom($this->getModuleConfigFilePath('icredit', 'cmsPages'), "asgard.icredit.cmsPages");
       $this->mergeConfigFrom($this->getModuleConfigFilePath('icredit', 'cmsSidebar'), "asgard.icredit.cmsSidebar");
 
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        //$this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
