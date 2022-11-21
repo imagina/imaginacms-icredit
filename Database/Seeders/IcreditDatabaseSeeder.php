@@ -17,6 +17,8 @@ class IcreditDatabaseSeeder extends Seeder
     {
         Model::unguard();
   
+        $this->call(IcreditModuleTableSeeder::class);
+        
       $this->call(WithdrawalfundsFormTableSeeder::class);
 
 
