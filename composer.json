@@ -28,12 +28,6 @@
         }
     ],
     "extra": {
-        "laravel": {
-            "providers": [],
-            "aliases": {
-
-            }
-        },
         "branch-alias": {
             "dev-v8.x": "8.0.x-dev"
         }
