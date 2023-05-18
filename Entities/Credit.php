@@ -14,6 +14,7 @@ class Credit extends CrudModel
   
 
   public $transformer = 'Modules\Icredit\Transformers\CreditTransformer';
+  public $repository = 'Modules\Icredit\Repositories\CreditRepository';
   public $requestValidation = [
     'create' => 'Modules\Icredit\Http\Requests\CreateCreditRequest',
     'update' => 'Modules\Icredit\Http\Requests\UpdateCreditRequest',
