@@ -2,7 +2,7 @@
 
 use Illuminate\Routing\Router;
 
-$router->group(['prefix' => '/payment'], function (Router $router) {
+Route::prefix('/payment')->group(function (Router $router) {
     $locale = \LaravelLocalization::setLocale() ?: \App::getLocale();
 
     $router->get('/', [
@@ -14,5 +14,4 @@ $router->group(['prefix' => '/payment'], function (Router $router) {
         'as' => 'icredit.api.payment.processPayment',
         'uses' => 'PaymentApiController@processPayment',
     ]);
-
 });
